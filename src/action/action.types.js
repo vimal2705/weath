@@ -1,0 +1,6 @@
+export const IS_LOCATION = "IS_LOCATION"
+export const LOCATION_ERROR = "LOCATION_ERROR"
+export const TODAY_WEATHER = "TODAY_WEATHER"
+export const ALL_CITY = "ALL_CITY"
+export const ALL_DATA =" ALL_DATA"
+export const CURRENT_AQI ="CURRENT_AQI"
