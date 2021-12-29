@@ -46,13 +46,14 @@ import test from "../assets/test.gif"
 import mist from "../assets/Mist.png"
 import sunrise from "../assets/sunrise.png"
 import sunset from "../assets/sunset.png"
-
+import { enableScreens } from 'react-native-screens';
 import AnimatedProgress from "react-native-reanimated-progress-bar";
 import LottieView from 'lottie-react-native';
 import { log, set } from "react-native-reanimated";
 import { LinearGradient } from 'expo-linear-gradient';
 import alldata from "../reducer/alldata";
 import { MyLocation } from '../action/location'
+
 import { StatusBar } from 'expo-status-bar';
 const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,cityState,currentaqiState}) => {
     const dispatch = useDispatch();
@@ -64,6 +65,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
       latitudeDelta: 20.21,
       longitudeDelta: 20.1,
     })
+    const arrays = []
     const [mapp, setmapp] = useState('pressure_new')
     const [mapvisual, setmapvisual] = useState(
       [{
@@ -102,6 +104,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
     const [time,settime] =useState(Math.floor((new Date()).getTime() / 1000))
     const [today, settoday] = useState()
     const [more, setmore] = useState(false)
+
     const [cityname, setcityname] = useState('')
     const goToTokyo = () => {
       //Animate the user to new region. Complete this animation in 3 seconds
@@ -114,13 +117,15 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
          array.map((item,index)=>
         (
             <TouchableOpacity  
-            key={index}
+
             onPress={() => {
+          
+            
               settimestamp(item.dt)
-              open ?setopen(false) : setopen(true)
+           setopen(true)
               setIndex(index)
             }}
-            // onPress={() => {open ?setopen(false) : setopen(true)}}
+         
             
             style={timestamp === item.dt ? {margin:10,borderRadius:25,alignItems:"center",width:50,}: { borderWidth:1,borderColor:"#fff" ,margin:10,borderRadius:25,alignItems:"center",width:50,}} >
 
@@ -164,18 +169,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
               </View>
              
             }
-                {/* <Image source={
-                 item.weather[0].id  === 800 ? sun: item.weather[0].id  === 801 ? fewcloudsday : item.weather[0].id  === 802 ? scatteredclouds: item.weather[0].id  === 803 ||  item.weather[0].id === 804 ? brokenclouds :   item.weather[0].id  === 200 ||  item.weather[0].id === 201 ||  item.weather[0].id === 202 ||  item.weather[0].id === 210 ||  item.weather[0].id === 211 ||  item.weather[0].id === 212 ||  item.weather[0].id === 221 ||  item.weather[0].id === 230 ||  item.weather[0].id === 231 ||  item.weather[0].id === 232 ? thunderstrom :   item.weather[0].id  === 300 ||  item.weather[0].id === 301 ||  item.weather[0].id === 302 ||  item.weather[0].id === 310 ||  item.weather[0].id === 311 ||  item.weather[0].id === 312 ||  item.weather[0].id === 321 ||  item.weather[0].id === 314  ? showerrain : item.weather[0].id  === 600 ||  item.weather[0].id === 601 ||  item.weather[0].id === 602 ||  item.weather[0].id === 611 ||  item.weather[0].id === 612 ||  item.weather[0].id === 613 ||  item.weather[0].id === 615 ||  item.weather[0].id === 616 ||  item.weather[0].id === 620 ||  item.weather[0].id === 621 ||  item.weather[0].id === 622? snow :  item.weather[0].id  ===  701 ||  item.weather[0].id === 711 ||  item.weather[0].id ===  721 ||  item.weather[0].id === 731 ||  item.weather[0].id === 741 ||  item.weather[0].id === 751 ||  item.weather[0].id === 761 ||  item.weather[0].id === 762 ||  item.weather[0].id === 771 ||  item.weather[0].id === 781 ? mist : item.weather[0].id  === 500 ||  item.weather[0].id === 501 ? rainday: item.weather[0].id  === 502 ||  item.weather[0].id === 503 ||  item.weather[0].id === 504 ||  item.weather[0].id === 511 ||  item.weather[0].id === 520 ||  item.weather[0].id === 521 ||  item.weather[0].id === 522 ||  item.weather[0].id === 531 ? showerrain: sun
-                
-                }   style={{height: Dimensions.get('window').height*0.030,width:Dimensions.get('window').height*0.030}}  /> 
-            
-          
-              <Text style={{color:"#fff",fontSize:18}}>{moment(item.dt * 1000).format("ddd")}</Text>
-              <View style={{flexDirection:"row"}}>
-                <Text style={{color:"#fff",fontSize:16}}>{(Math.round((item.temp.day)-273.15))}</Text>
-                <Text  style={{color:"#fff",fontSize:10}}>°C</Text>
-                </View>
-           */}
+           
                 
                   </TouchableOpacity>
                 )
@@ -204,7 +198,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
            
           }}>
          <TouchableOpacity 
-    onPress={() => {open ?setopen(false) : setopen(true)}}
+    onPress={() => setopen(false)}
 
     >
 
@@ -446,7 +440,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
       }
     }, 10000);
    
-  
+   
     const changeRegion = () =>{
       setregion(region)
       }
@@ -454,8 +448,16 @@ useEffect(() => {
   
     setlocation(locationState.city)
    
+
+    // for (let i = 0; i < cityState.TopCity.length; i++) {
+
+    //   if (condition) {
+        
+    //   }
    
-    
+    // }
+ 
+ 
     // setSelectedcity(cityState.city)
    
   tempdata.push(todayweatherState.todayweather)
@@ -495,6 +497,7 @@ goToTokyo()
     onPress={() => {
       setModalVisible(true)
       setSelectedcity(cityState.city)
+    
     }}
   >
     <Material name="location-searching" color="#FFF" size={ Dimensions.get('window').height*0.03} style={{backgroundColor:"transparent"}}/>
@@ -601,11 +604,37 @@ goToTokyo()
               resetValue={false}
               underlineColorAndroid="transparent"
             />
-       
-            <FlatList
+            <ScrollView     > 
+       <View style={{  flexWrap: "wrap",
+    flexDirection: "row",}}>
+        {cityState.TopCity.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+              
+                    // allinone(latitiude, longitude)
+                  // console.log(lon,'rty',lat);
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    </ScrollView>
+ 
+            {/* <FlatList
            keyExtractor={(item, index) => index.toString()}
-    data={cityState.TopCity}
-    numColumns={3}
+           horizontal={true}
+    data={arrays}
+  
 style={{alignContent:"center",margin:10}}
 
     renderItem={({item}) => 
@@ -624,11 +653,15 @@ style={{alignContent:"center",margin:10}}
      }} style={{borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
     <Text>{item.name}</Text>
     </TouchableOpacity>
+   
+
+   
+
     
             
   
             }
-            />
+            /> */}
 
         
         
@@ -642,21 +675,22 @@ style={{alignContent:"center",margin:10}}
                 right:5
              
               }}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {setModalVisible(!modalVisible)
+              enableScreens()
+              }}
             >
               <Icon name="close" color="#FFF" size={18} />
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      <ScrollView 
-      
+      <ScrollView  
+ 
+      nestedScrollEnabled={true}
       showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
       style={{width:"100%" ,paddingBottom:40,  borderBottomLeftRadius:25,
   borderBottomRightRadius:25,}}
-  onScrollBeginDrag={() => console.log('begin')}
-  onScrollEndDrag={() => console.log('end')}
- 
+  
   >
     
 
@@ -1054,9 +1088,16 @@ style={{alignContent:"center",margin:10}}
        <View style={{height:400,width:"100%",borderTopLeftRadius:25,borderTopRightRadius:25}}>
    
     <View style={{ flex: 1,  justifyContent: 'center',zIndex:0 ,borderTopLeftRadius:25,borderTopRightRadius:25}}>
-    
-                <Carousel
-                
+
+    {/* <TouchableOpacity 
+    onPress={() => {open ?setopen(false) : setopen(true)}}
+
+    >
+
+    <Image source={require('../assets/Arrow_Down.png')} style={{height:30,width:30,alignSelf:"center",top:-10}} />
+    </TouchableOpacity> */}
+     
+                <Carousel 
                   layout={"default"}
                   ref={isCarousel}
                   data={alldataState.daily}

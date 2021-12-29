@@ -17,38 +17,38 @@ export const MyLocation = (data) => async (dispatch) => {
         })
 
         .catch((error) => console.log('err',error))
-  // axios.get(
-  //   `http://api.openweathermap.org/data/2.5/air_pollution?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}`
-  // ).then(function (response) {
+  axios.get(
+    `http://api.openweathermap.org/data/2.5/air_pollution?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}`
+  ).then(function (response) {
 
     
     
-  //     dispatch({
-  //         type: CURRENT_AQI,
-  //         payload: response.data,
-  //       });
+      dispatch({
+          type: CURRENT_AQI,
+          payload: response.data,
+        });
 
-  // }
-  // )
-  // axios.get(
-  //   `https://api.openweathermap.org/data/2.5/onecall?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}&exclude=current`
-  // ).then(
-  //   function (response) {
-  //   //  (response.data.daily.slice(1,8))
-  //     console.log('a-0-0-0-0-0-0-0-')
-  //     // sethourly(response.data.hourly.slice(1,24))
-  //       dispatch({
-  //           type: ALL_DATA,
-  //           payload: response.data,
-  //           currentday: response.data.daily[0],
-  //           daily:response.data.daily.slice(0,8),
-  //           hourly:response.data.hourly.slice(2,27)
-  //         });
-  //   }
+  }
+  )
+  axios.get(
+    `https://api.openweathermap.org/data/2.5/onecall?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}&exclude=current`
+  ).then(
+    function (response) {
+    //  (response.data.daily.slice(1,8))
+      console.log('a-0-0-0-0-0-0-0-')
+      // sethourly(response.data.hourly.slice(1,24))
+        dispatch({
+            type: ALL_DATA,
+            payload: response.data,
+            currentday: response.data.daily[0],
+            daily:response.data.daily.slice(0,8),
+            hourly:response.data.hourly.slice(2,27)
+          });
+    }
 
-  // )
-  // .catch((error) => 
-  // console.log('-----------------------',error))
+  )
+  .catch((error) => 
+  console.log('-----------------------',error))
 
   try {
     axios.get(
@@ -63,35 +63,7 @@ export const MyLocation = (data) => async (dispatch) => {
                     ).then(function (response) {
                  
                        console.log('asdasdas')
-                       axios.get(
-                        `http://api.openweathermap.org/data/2.5/air_pollution?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}`
-                      ).then(function (response) {
-                    
-                        axios.get(
-                          `https://api.openweathermap.org/data/2.5/onecall?appid=b38e991d02830a9ecadf29376fe02abe&lat=${data.lat}&lon=${data.lon}&exclude=current`
-                        ).then(
-                          function (response) {
-                          //  (response.data.daily.slice(1,8))
-                            console.log('a-0-0-0-0-0-0-0-')
-                            // sethourly(response.data.hourly.slice(1,24))
-                              dispatch({
-                                  type: ALL_DATA,
-                                  payload: response.data,
-                                  currentday: response.data.daily[0],
-                                  daily:response.data.daily.slice(0,8),
-                                  hourly:response.data.hourly.slice(2,27)
-                                });
-                          }
                       
-                        )
-                        
-                          dispatch({
-                              type: CURRENT_AQI,
-                              payload: response.data,
-                            });
-                    
-                      }
-                      )
                       
                         dispatch({
                             type: TODAY_WEATHER,

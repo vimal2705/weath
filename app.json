@@ -23,14 +23,21 @@
           "NSAllowsArbitraryLoads": true
         }
       },
-      "bundleIdentifier": "com.vimal2705.weather"
+      "bundleIdentifier": "com.haraxy.weather"
     },
     "android": {
+   
+        "config": {
+          "googleMaps": {
+            "apiKey": "AIzaSyCzYpgzn_IWhLM8iJpZujt7BP9jyujTgEg"
+          }
+        },
+   
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive_Icon.png",
         "backgroundColor": "#2196F3"
       },
-      "package": "com.vimal2705.weather"
+      "package": "com.haraxy.weather"
     },
     "web": {
       "favicon": "./assets/favicon.png"
