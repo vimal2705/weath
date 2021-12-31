@@ -12,7 +12,12 @@ export const MyLocation = (data) => async (dispatch) => {
               dispatch({
                 type: ALL_CITY,
                 payload: response.data,
-                Top: response.data.slice(0,50)
+                Top10: response.data.slice(0,9),
+                Top20:response.data.slice(10,19),
+                Top30: response.data.slice(20,29),
+                Top40:response.data.slice(30,39),
+                Top50: response.data.slice(40,49),
+                Top60:response.data.slice(50,59),
               });
         })
 

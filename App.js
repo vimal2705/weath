@@ -6,7 +6,7 @@ import { enableScreens } from 'react-native-screens';
 import Root from './Root'
 
 const App = () => {
-    enableScreens(false)
+    enableScreens()
     if (Text.defaultProps == null) {
         Text.defaultProps = {};
         Text.defaultProps.allowFontScaling = false;

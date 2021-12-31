@@ -12,8 +12,11 @@ import {
   ScrollView,
 SafeAreaView,
   Dimensions,
-  FlatList,Linking
+  FlatList,Linking,
+  VirtualizedList,
+  ScrollViewBase
 } from "react-native";
+import { ScrollView as GestureHandlerScrollView } from 'react-native-gesture-handler'
 import SvgComponent from "../assets/svgComponent";
 import Carousel from 'react-native-snap-carousel';
 import propTypes from "prop-types";
@@ -55,7 +58,7 @@ import alldata from "../reducer/alldata";
 import { MyLocation } from '../action/location'
 
 import { StatusBar } from 'expo-status-bar';
-const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,cityState,currentaqiState}) => {
+const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,cityState,currentaqiState,navigation}) => {
     const dispatch = useDispatch();
     const mapRef = useRef(null);
     const [location, setlocation] = useState(null);
@@ -104,7 +107,7 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
     const [time,settime] =useState(Math.floor((new Date()).getTime() / 1000))
     const [today, settoday] = useState()
     const [more, setmore] = useState(false)
-
+const [flag, setflag] = useState(false)
     const [cityname, setcityname] = useState('')
     const goToTokyo = () => {
       //Animate the user to new region. Complete this animation in 3 seconds
@@ -445,9 +448,10 @@ const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,c
       setregion(region)
       }
 useEffect(() => {
-  
+
     setlocation(locationState.city)
-   
+console.log('asdas',todayweatherState.loading);
+      
 
     // for (let i = 0; i < cityState.TopCity.length; i++) {
 
@@ -460,11 +464,18 @@ useEffect(() => {
  
     // setSelectedcity(cityState.city)
    
-  tempdata.push(todayweatherState.todayweather)
-  if(time < 1639139162 )
-  {
-console.log('lets check',time);
-  }
+    const unsubscribe = navigation.addListener('focus', () => {
+
+      enableScreens()
+      
+ 
+    });
+
+    console.log('ghj');
+
+
+  return unsubscribe;
+
 }, [location,selectedcity,tempdata,today,cityname,region,mapp])
 
 const send = (lat,lon,name) => {
@@ -473,6 +484,24 @@ console.log('city name',name);
 setlocation(name)
 goToTokyo()
 }
+// if (todayweatherState.loading) {
+//     return (
+//       <View style={{alignContent:"center",alignItems:"center",justifyContent:"center",flex:1}}>
+//          <LottieView
+       
+//        style={{
+//          width:300,
+//          height:300,
+       
+       
+//        }}
+//        source={require('./src/assets/loadingg_.json')}
+//       autoPlay
+//      />
+//       </View>
+//     )
+// }
+
   return (
     <View style={styles.container}>
   <StatusBar style="light" />
@@ -495,10 +524,10 @@ goToTokyo()
   <TouchableOpacity
     style={{paddingLeft:10,paddingTop:8}}
     onPress={() => {
-      setModalVisible(true)
-      setSelectedcity(cityState.city)
-    
+     setModalVisible(true) 
+      // navigation.navigate('LocationScreen')
     }}
+
   >
     <Material name="location-searching" color="#FFF" size={ Dimensions.get('window').height*0.03} style={{backgroundColor:"transparent"}}/>
   
@@ -604,10 +633,16 @@ goToTokyo()
               resetValue={false}
               underlineColorAndroid="transparent"
             />
-            <ScrollView     > 
+            <ScrollView
+
+           >
+     
+           
+              
+           <SafeAreaView  style={{flexDirection:"row"}}>
        <View style={{  flexWrap: "wrap",
-    flexDirection: "row",}}>
-        {cityState.TopCity.map((item,index) => (
+    flexDirection: "column",}}>
+        {cityState.Top10.map((item,index) => (
                    <TouchableOpacity 
                    onPress={() => {
                     setlat(item.lat);
@@ -628,12 +663,130 @@ goToTokyo()
 
 
     </View>
+
+    <View style={{  flexWrap: "wrap",
+    flexDirection: "column",}}>
+        {cityState.Top20.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+              
+                    // allinone(latitiude, longitude)
+                  // console.log(lon,'rty',lat);
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    <View style={{  flexWrap: "wrap",
+    flexDirection: "column",}}>
+        {cityState.Top30.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+              
+                    // allinone(latitiude, longitude)
+                  // console.log(lon,'rty',lat);
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    <View style={{  flexWrap: "wrap",
+    flexDirection: "column",}}>
+        {cityState.Top40.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+              
+                    // allinone(latitiude, longitude)
+                  // console.log(lon,'rty',lat);
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    <View style={{  flexWrap: "wrap",
+    flexDirection: "column",}}>
+        {cityState.Top50.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+           
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    <View style={{  flexWrap: "wrap",
+    flexDirection: "column",}}>
+        {cityState.Top60.map((item,index) => (
+                   <TouchableOpacity 
+                   onPress={() => {
+                    setlat(item.lat);
+                    setlon(item.lon);
+                    console.log('asdasdasdas',item.name);
+                    send(item.lat,item.lon,item.name)
+                  setcityname(item.name)
+              
+                    // allinone(latitiude, longitude)
+                  // console.log(lon,'rty',lat);
+                
+                    setModalVisible(!modalVisible);
+                   }} style={{flexGrow:1, borderWidth:1,padding:5,margin:10,borderRadius:20,paddingHorizontal:10}}>
+                  <Text>{item.name}</Text>
+                  </TouchableOpacity>
+                  
+                      ))}
+
+
+    </View>
+    </SafeAreaView>
+
     </ScrollView>
- 
-            {/* <FlatList
+
+
+{/*  
+            <FlatList
            keyExtractor={(item, index) => index.toString()}
            horizontal={true}
-    data={arrays}
+    data={cityState.Top10}
   
 style={{alignContent:"center",margin:10}}
 
@@ -686,7 +839,7 @@ style={{alignContent:"center",margin:10}}
       </Modal>
       <ScrollView  
  
-      nestedScrollEnabled={true}
+ contentContainerStyle={{borderColor:"#fff"}}
       showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
       style={{width:"100%" ,paddingBottom:40,  borderBottomLeftRadius:25,
   borderBottomRightRadius:25,}}
