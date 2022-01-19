@@ -9,7 +9,7 @@ import {
   Touchable,
   Modal,
   Image,
-  ScrollView,
+  // ScrollView,
 SafeAreaView,
   Dimensions,
   FlatList,Linking,
@@ -57,6 +57,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import alldata from "../reducer/alldata";
 import { MyLocation } from '../action/location'
 
+const { ScrollView } = ReactNative.NativeModules;
 import { StatusBar } from 'expo-status-bar';
 const HomeScreen = ({MyLocation, locationState,todayweatherState,alldataState ,cityState,currentaqiState,navigation}) => {
     const dispatch = useDispatch();
@@ -837,10 +838,9 @@ style={{alignContent:"center",margin:10}}
           </View>
         </View>
       </Modal>
-      <ScrollView  
+      <ScrollView
+
  
- contentContainerStyle={{borderColor:"#fff"}}
-      showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
       style={{width:"100%" ,paddingBottom:40,  borderBottomLeftRadius:25,
   borderBottomRightRadius:25,}}
   
